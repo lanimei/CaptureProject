@@ -1,0 +1,14 @@
+2018/07/10 20:20:31 capturePacket
+2018/07/10 20:20:31 Capture packet begin: init
+2018/07/10 20:20:36 Received an signal:  interrupt
+2018/07/10 20:34:29 log
+2018/07/10 20:34:29 daemon
+2018/07/10 20:34:29 forever
+2018/07/10 20:34:29 capturePacket
+2018/07/10 20:34:30 Received an signal:  interrupt
+2018/07/10 20:34:46 log
+2018/07/10 20:34:46 daemon
+2018/07/10 20:34:46 forever
+2018/07/10 20:34:46 capturePacket
+2018/07/10 20:34:46 0xc42004c690    0xc42004c6c0
+2018/07/10 20:34:47 Received an signal:  interrupt

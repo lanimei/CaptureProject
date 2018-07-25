@@ -1,0 +1,46 @@
+{
+  "deviceMassArgs": [
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei1",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    },
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei2",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    },
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei3",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    },
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei4",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    },
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei5",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    },
+    {
+      "deviceName": "lo",
+      "filterString": "",
+      "ipName": "",
+      "malName": "lanimei6",
+      "pcapPath": "/home/lanimei/Project/go/src/capture_packet/CaptureProject"
+    }
+  ]
+}

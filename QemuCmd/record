@@ -1,0 +1,22 @@
+1.这里强调一下挂载文件所需要的命令，主要使用到guestmount这个命令
+https://www.wolfcstech.com/2017/10/31/qcow2_on_linux/
+
+
+2.centos中安装qemu软件
+https://www.qemu.org/download/#source
+
+wget https://download.qemu.org/qemu-3.0.0-rc1.tar.xz
+tar xvJf qemu-3.0.0-rc1.tar.xz
+cd qemu-3.0.0-rc1
+./configure
+make
+
+
+3.qemu命名网卡
+https://blog.csdn.net/u011795345/article/details/79030635
+centos安装qemu
+yum install qemu-kvm
+
+
+4.过早优化是万恶之源
+程序以服务的方式来进行运行，接收命令来执行
