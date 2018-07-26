@@ -43,8 +43,8 @@ const (
 //armhf
 const (
 	armhf_m = "vexpress-a9"
-	armhf_kernel_wheezy = "vmlinuz-3.2.0-4-versatile"
-	armhf_initrd_wheezy = "initrd.img-3.2.0-4-versatile"
+	armhf_kernel_wheezy = "vmlinuz-3.2.0-4-vexpress"
+	armhf_initrd_wheezy = "initrd.img-3.2.0-4-vexpress"
 	armhf_drive_wheezy = "debian_wheezy_armhf_standard.qcow2"
 	armhf_append_wheezy = "root=/dev/mmcblk0p2 console=tty0"
 
@@ -54,7 +54,7 @@ const (
 //mips, 64位则使用64位代码即可
 const (
 	mips_m = "malta"
-	mips_kernel_squeeze_32 = "vmlinux-2.6.32-5-4kc-malta"
+	mips_kernel_squeeze_32 = "vmlinux-2.6.32-5-4kc-malta-mips"
 	mips_kernel_wheezy_32 = "vmlinux-3.2.0-4-4kc-malta"
 	mips_kernel_squeeze_64 = "vmlinux-2.6.32-5-5kc-malta"
 	mips_kernel_wheezy_64 = "vmlinux-3.2.0-4-5kc-malta"
@@ -67,11 +67,11 @@ const (
 //mipsel
 const (
 	mipsel_m = "malta"
-	mipsel_kernel_squeeze_32 = "vmlinux-2.6.32-5-4kc-malta"
+	mipsel_kernel_squeeze_32 = "vmlinux-2.6.32-5-4kc-malta-mipsel"
 	mipsel_kernel_wheezy_32 = "vmlinux-3.2.0-4-4kc-malta"
 	mipsel_kernel_squeeze_64 = "vmlinux-2.6.32-5-5kc-malta"
 	mipsel_kernel_wheezy_64 = "vmlinux-3.2.0-4-5kc-malta"
-	mipsel_hda_squeeze = "debian_squeeze_mips_standard.qcow2"
+	mipsel_hda_squeeze = "debian_squeeze_mipsel_standard.qcow2"
 	mipsel_hda_wheezy = "debian_wheezy_mips_standard.qcow2"
 	mipsel_append = "root=/dev/sda1 console=tty0"
 	Mipsel_device = "/dev/sda1"
@@ -96,6 +96,24 @@ type CmdArgs struct {
 	Pid string
 	Feature string //记录qemu-system进程的pid号等进程相关信息
 }
+
+//make image, and get the name of images
+const(
+	image_debian = "debian"
+
+	image_wheezy = "wheezy"
+	image_squeeze = "squeeze"
+
+	image_armel = "armel"
+	image_armhf = "armhf"
+
+	image_mips = "mips"
+	image_mipsel = "mipsel"
+
+	image_x86 = "x86"
+	image_amd = "amd64"
+
+)
 
 
 /*

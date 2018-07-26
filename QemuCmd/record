@@ -20,3 +20,7 @@ yum install qemu-kvm
 
 4.过早优化是万恶之源
 程序以服务的方式来进行运行，接收命令来执行
+
+5.管理镜像文件，
+生成镜像文件
+squeeze/wheezy_armel/armhf/mips/mipsel_MalwareName

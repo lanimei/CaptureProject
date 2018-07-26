@@ -1,4 +1,4 @@
-package utils
+package QemuCmd
 
 import (
 	"testing"
@@ -21,6 +21,14 @@ func TestMipsArgs_UnloadImage(t *testing.T) {
 	err := UnloadImage(mount_str)
 	if err != nil {
 		log.Println(err)
+	}
+}
+
+
+func TestMakedir(t *testing.T) {
+	err := Makedir("/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/test")
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 

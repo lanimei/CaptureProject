@@ -11,20 +11,19 @@ import (
 //创建mips和mipsel命令行
 //这里需要注意的是, netStr是网卡的物理地址, 而tapStr则是网卡名字, 这里的网卡名tapStr预先使用恶意样本名作为网卡名
 func CreateMipsMipselCmd(mStr string, kernelStr string , hdaStr string, isGraphic bool, append string, macStr string, tapStr string, isMips bool)(cmdArg CmdArgs){
-	if utils.Debug_ {
-		log.Println("QemuCmd.CreateMipsMipselCmd")
-	}
-	mips := InitCmdConfig()
-	mips.MStr = mStr
-	mips.Isgraphic = isGraphic
-	mips.KernelStr = kernelStr
-	mips.HdaStr = hdaStr
-	mips.AppendStr = append
-	mips.MacAddr = macStr
-	TempMacAddr := "nic,macaddr="+macStr
-	TempTapStr := "tap,ifname="+tapStr
-	if mips.Isgraphic {
-		mips.CmdQemu = " -M " + mips.MStr + " -kernel " + mips.KernelStr + " -hda " + mips.HdaStr + " -append " + mips.AppendStr + " -net " + TempMacAddr + " -net " + TempTapStr
+		if utils.Debug_ {
+			log.Println("QemuCmd.CreateMipsMipselCmd")
+		}
+		mips := InitCmdConfig()
+		mips.MStr = mStr
+		mips.Isgraphic = isGraphic
+		mips.KernelStr = kernelStr
+		mips.HdaStr = hdaStr
+		mips.AppendStr = append
+		mips.MacAddr = macStr
+		TempMacAddr := "nic,macaddr="+macStr
+		TempTapStr := "tap,ifname="+tapStr
+		mips.CmdQemu = " -M " + mips.MStr + " -kernel " + mips.KernelStr + " -hda " + mips.HdaStr + " -append " + mips.AppendStr + " -net " + TempMacAddr + " -net " + TempTapStr + " -nographic"
 		if isMips {
 			mips.Cmd = exec.Command(
 				"qemu-system-mips",
@@ -40,6 +39,7 @@ func CreateMipsMipselCmd(mStr string, kernelStr string , hdaStr string, isGraphi
 				TempMacAddr,
 				"-net",
 				TempTapStr,
+				"-nographic",
 				)
 			mips.CmdQemu = "qemu-system-mips" + mips.CmdQemu
 		}else {
@@ -57,51 +57,11 @@ func CreateMipsMipselCmd(mStr string, kernelStr string , hdaStr string, isGraphi
 				TempMacAddr,
 				"-net",
 				TempTapStr,
-			)
-			mips.CmdQemu = "qemu-system-mipsel" + mips.CmdQemu
-		}
-	}else {
-		mips.CmdQemu = " -M " + mips.MStr + " -kernel " + mips.KernelStr + " -hda " + mips.HdaStr + " -append " + mips.AppendStr + " -net " + TempMacAddr + " -net " + TempTapStr + "-nographic"
-		if isMips {
-			mips.Cmd = exec.Command(
-				"qemu-system-mips",
-				"-M",
-				mips.MStr,
-				"-kernel",
-				mips.KernelStr,
-				"-hda",
-				mips.HdaStr,
-				"-append",
-				mips.AppendStr,
-				"-net",
-				TempMacAddr,
-				"-net",
-				TempTapStr,
-				"-nographic",
-			)
-			mips.CmdQemu = "qemu-system-mips" + mips.CmdQemu
-		}else {
-			mips.Cmd = exec.Command(
-				"qemu-system-mipsel",
-				"-M",
-				mips.MStr,
-				"-kernel",
-				mips.KernelStr,
-				"-hda",
-				mips.HdaStr,
-				"-append",
-				mips.AppendStr,
-				"-net",
-				TempMacAddr,
-				"-net",
-				TempTapStr,
 				"-nographic",
 			)
 			mips.CmdQemu = "qemu-system-mipsel" + mips.CmdQemu
 		}
-
-	}
-	return mips
+		return mips
 }
 
 
@@ -229,13 +189,14 @@ func(cmdArg *CmdArgs) Start32()(errStart error){
 		log.Println("QemuCmd.Start")
 	}
 	if err := cmdArg.Cmd.Start(); err != nil {
-		log.Println("Start启动qemu进程时出现问题")
+		log.Println(cmdArg.HdaStr, ":Start启动qemu进程时出现问题")
 		log.Println(err)
 		errStart = err
 	}
 	log.Printf("%d", cmdArg.Cmd.Process.Pid)
 	if err := cmdArg.Cmd.Wait(); err != nil {
-		log.Println("Wait等待qemu进程时出现问题")
+		//强制kill退出后， kill会打印出相关的字符串
+		log.Println(cmdArg.HdaStr, ":Wait等待qemu进程时出现问题")
 		log.Println(err)
 		errStart = err
 	}

@@ -1,10 +1,11 @@
-package utils
+package QemuCmd
 
 import (
 	"log"
 	"io/ioutil"
 	"os/exec"
 	"fmt"
+	"../utils"
 )
 
 //创建恶意样本的镜像文件
@@ -24,8 +25,8 @@ golang中必须是这种形式exec.Command("aaa", "-a", "a", "-b", "b")
 而不能是如下的形式 exec.Command("aaa -a a -b b")
  */
 func LoadImage(ImagePath string, MountPath string)(err error){
-	if Debug_ {
-		log.Println("QemuCmd.LoadImage")
+	if utils.Debug_ {
+		log.Println("utils.LoadImage")
 	}
 	if ImagePath == "" || MountPath == "" {
 		err = fmt.Errorf("ImagePath为空或者MountPath为空")
@@ -52,8 +53,8 @@ func LoadImage(ImagePath string, MountPath string)(err error){
 
 //卸载镜像文件，将镜像文件所对应的目录卸载
 func UnloadImage(MountPath string)(err error){
-	if Debug_ {
-		log.Println("QemuCmd.UnloadImage")
+	if utils.Debug_ {
+		log.Println("utils.UnloadImage")
 	}
 	if MountPath == "" {
 		err = fmt.Errorf("MountPath为空")
@@ -74,4 +75,21 @@ func UnloadImage(MountPath string)(err error){
 	err = cmd.Wait()
 	log.Printf("Command finished with error: %v", err)
 	return nil
+}
+
+
+func Makedir(DirPath string)(err error){
+	if utils.Debug_ {
+		log.Println("utils.Makedir")
+	}
+	if DirPath == "" {
+		err = fmt.Errorf("DirPath为空")
+		return
+	}
+	cmd := exec.Command("mkdir", "-p", DirPath)
+	err = cmd.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return
 }
