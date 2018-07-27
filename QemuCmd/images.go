@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"fmt"
 	"../utils"
+	"strings"
 )
 
 type FilesPath struct {
@@ -171,4 +172,49 @@ func CpInitImage(srcPath string, destPath string)(err error) {
 	err = cmd.Wait()
 	log.Printf("Command finished with error: %v", err)
 	return
+}
+
+
+
+
+//这里首先只针对mipsel和arm样本做养殖
+func MalwareClassify(MalwarePath string)(string, error){
+	if utils.Debug_ {
+		log.Println("QemuCmd.MalwareClassify")
+	}
+	if MalwarePath == "" {
+		err := fmt.Errorf("QemuCmd.MalwareClassify: MalwarePath为空")
+		label := ""
+		return label, err
+	}
+	cmd := exec.Command("file", MalwarePath)
+	out, err := cmd.Output()
+	if err != nil {
+		log.Println(out)
+		return "", err
+	}
+	outstr := string(out)
+	if strings.Contains(outstr, "MIPS") {
+		return "mips", nil
+	}
+	if strings.Contains(outstr, "ARM") {
+		return "arm", nil
+	}
+	if strings.Contains(outstr, "80386") {
+		return "i386", nil
+	}
+	if strings.Contains(outstr, "x86-64") {
+		return "x86-64", nil
+	}
+	if strings.Contains(outstr, "PowerPC") {
+		return "PowerPC", nil
+	}
+	if strings.Contains(outstr, "SPARC") {
+		return "SPARC", nil
+	}
+	if strings.Contains(outstr, "Renesas") {
+		return "Renesas", nil
+	}
+	err = fmt.Errorf("QemuCmd.MalwareClassify：未找到该文件的类型")
+	return "", err
 }
