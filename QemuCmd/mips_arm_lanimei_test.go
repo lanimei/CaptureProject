@@ -1,13 +1,13 @@
 package QemuCmd
 
 import(
-	"testing"
-	"log"
-	"time"
+//	"testing"
+//	"log"
+//	"time"
 )
 
 
-
+/*
 func TestCreateArmelArmhfCmd(t *testing.T) {
 
 	//armel开始运行
@@ -46,12 +46,11 @@ func TestCreateArmelArmhfCmd(t *testing.T) {
 	time.Sleep(20 * time.Second)
 	armel.Stop32()
 	armhf.Stop32()
-	/*
-	强制退出后， 会打印一些退出的字符串
-	*/
+
+	//强制退出后， 会打印一些退出的字符串
 }
-
-
+*/
+/*
 func TestCreateMipsMipselCmd(t *testing.T) {
 	time.Sleep(20 * time.Second)
 	mips := CreateMipsMipselCmd(
@@ -85,3 +84,4 @@ func TestCreateMipsMipselCmd(t *testing.T) {
 	mipsel.Stop32()
 }
 
+*/
