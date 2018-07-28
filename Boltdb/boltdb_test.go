@@ -62,3 +62,20 @@ func TestSaveBoltDBStruct_and_ReadBoltDB(t *testing.T) {
 	log.Println(ReadBoltDBStruct)
 }
 
+func TestMalSha256DB(t *testing.T) {
+	firstMalware, err := MalSha256DB("rc.local")
+	if err != nil {
+		log.Println(firstMalware)
+	}
+	err = MalSha256DBInsert("rc.local")
+	if err != nil {
+		log.Println(err)
+	}
+	firstMalware, err = MalSha256DB("rc.local")
+	if err != nil {
+		log.Println(firstMalware)
+		log.Fatal(err)
+	}
+	log.Println(firstMalware)
+}
+
