@@ -97,3 +97,19 @@ func TestMalwareClassify(t *testing.T) {
 	}
 	log.Println(output)
 }
+
+func TestGetAllMalware(t *testing.T) {
+	Malwarelist, err := GetAllMalware("/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/malware")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(Malwarelist)
+}
+
+func TestGetMalwareSha256(t *testing.T) {
+	Sha256, err := GetMalwareSha256("/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/rc.local")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(Sha256)
+}

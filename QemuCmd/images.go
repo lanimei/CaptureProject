@@ -6,9 +6,14 @@ import (
 	"os/exec"
 	"fmt"
 	"../utils"
-	"strings"
 )
 
+
+
+//This file is to create a image for mips, mipsel, arm and so on
+
+
+//将FilesPath当成一个中间变量即可, 其中的MalwarePath必须是一个样本的路径名
 type FilesPath struct {
 	MalwarePath string
 	StartScript string
@@ -137,84 +142,3 @@ func UnloadImage(MountPath string)(err error) {
 }
 
 
-func MakeDir(DirPath string)(err error) {
-	if utils.Debug_ {
-		log.Println("QemuCmd.Makedir")
-	}
-	if DirPath == "" {
-		err = fmt.Errorf("DirPath为空")
-		return
-	}
-	cmd := exec.Command("mkdir", "-p", DirPath)
-	err = cmd.Start()
-	if err != nil {
-		log.Println("Makedir: ", err)
-	}
-	err = cmd.Wait()
-	log.Printf("Command finished with error: %v", err)
-	return
-}
-
-
-func CpInitImage(srcPath string, destPath string)(err error) {
-	if utils.Debug_ {
-		log.Println("QemuCmd.CpInitImage")
-	}
-	if srcPath == "" || destPath == "" {
-		err = fmt.Errorf("srcPath为空或destPath为空")
-		return
-	}
-	cmd := exec.Command("cp", srcPath, destPath)
-	err = cmd.Start()
-	if err != nil {
-		log.Println("CpInitImage", err)
-	}
-	err = cmd.Wait()
-	log.Printf("Command finished with error: %v", err)
-	return
-}
-
-
-
-
-//这里首先只针对mipsel和arm样本做养殖
-func MalwareClassify(MalwarePath string)(string, error){
-	if utils.Debug_ {
-		log.Println("QemuCmd.MalwareClassify")
-	}
-	if MalwarePath == "" {
-		err := fmt.Errorf("QemuCmd.MalwareClassify: MalwarePath为空")
-		label := ""
-		return label, err
-	}
-	cmd := exec.Command("file", MalwarePath)
-	out, err := cmd.Output()
-	if err != nil {
-		log.Println(out)
-		return "", err
-	}
-	outstr := string(out)
-	if strings.Contains(outstr, "MIPS") {
-		return "mips", nil
-	}
-	if strings.Contains(outstr, "ARM") {
-		return "arm", nil
-	}
-	if strings.Contains(outstr, "80386") {
-		return "i386", nil
-	}
-	if strings.Contains(outstr, "x86-64") {
-		return "x86-64", nil
-	}
-	if strings.Contains(outstr, "PowerPC") {
-		return "PowerPC", nil
-	}
-	if strings.Contains(outstr, "SPARC") {
-		return "SPARC", nil
-	}
-	if strings.Contains(outstr, "Renesas") {
-		return "Renesas", nil
-	}
-	err = fmt.Errorf("QemuCmd.MalwareClassify：未找到该文件的类型")
-	return "", err
-}
