@@ -1,0 +1,7 @@
+{
+  "malware_path":"/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/malware",
+  "start_script":"/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/Startup",
+  "image_src_path":"/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/images",
+  "image_dest_path":"/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/images_dest",
+  "load_path":"/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/test"
+}
