@@ -60,6 +60,7 @@ func TestCreateImage(t *testing.T) {
 }
 */
 
+/*
 func TestMalwareClassify(t *testing.T) {
 	output, err := MalwareClassify("/home/lanimei/lanimei_work/Bread_mal/malware_07_09/mal/MIPS/ff1e7def7f1c15ae17b66256eda2ae26b35841a589860953389a7cc25ca1fef5")
 	if err != nil {
@@ -112,4 +113,28 @@ func TestGetMalwareSha256(t *testing.T) {
 		log.Fatal(err)
 	}
 	log.Println(Sha256)
+}
+
+func TestParseConfig(t *testing.T) {
+	lanimei, err := ParseConfig("/home/lanimei/Project/go/src/capture_packet/CaptureProject/QemuCmd/test.json")
+	if err != nil {
+		log.Fatal("解析文件出现问题")
+		log.Println(err)
+	}
+	log.Println("MalwarePath: ", lanimei.MalwarePath)
+	log.Println("StartScript: ", lanimei.StartScript)
+	log.Println("ImageSrcPath: ", lanimei.ImageSrcPath)
+	log.Println("ImageDestPath: ", lanimei.ImageDestPath)
+	log.Println("LoadPath: ", lanimei.LoadPath)
+}
+*/
+
+func TestInitFilesPath(t *testing.T) {
+	log.Println("开始：")
+	InitFilesPath()   //主函数中执行该函数进行赋值
+	log.Println(len(Malwares))
+	for _, item := range Malwares{
+		item.CreateStartup()
+		item.CreateImage()
+	}
 }
