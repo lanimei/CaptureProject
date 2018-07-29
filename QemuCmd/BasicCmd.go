@@ -7,6 +7,8 @@ import (
 	"../utils"
 	"strings"
 	"path/filepath"
+	"io/ioutil"
+	"encoding/json"
 )
 
 
@@ -80,16 +82,15 @@ func MalwareClassify(MalwarePath string)(string, error){
 		return "x86-64", nil
 	}
 	if strings.Contains(outstr, "PowerPC") {
-		return "PowerPC", nil
+		return "powerpc", nil
 	}
 	if strings.Contains(outstr, "SPARC") {
-		return "SPARC", nil
+		return "sparc", nil
 	}
 	if strings.Contains(outstr, "Renesas") {
-		return "Renesas", nil
+		return "renesas", nil
 	}
-	err = fmt.Errorf("QemuCmd.MalwareClassify：未找到该文件的类型")
-	return "", err
+	return "", nil
 }
 
 //建议该MalwarePath下不要包含任何文件夹，只需要是恶意样本文件即可，如果包含了文件夹会导致无法准确识别相关信息
@@ -127,17 +128,42 @@ func GetMalwareSha256(MalwarePath string)(MalSha256 string, err error) {
 }
 
 
-func ParseConfig(ConfigPath string)(filePath *FilesPath){
+//需要注意的是， 这里的ConfigPath一定必须是完整的路径，包括文件名的那种路径
+//这里要注意的问题是，
+// MalwarePath
+// ImageSrcPath
+// ImageDestPath
+// LoadPath
+// 以上四个路径都必须是目录文件，这个观点很重要
+// StartScript为启动脚本， 即 rc.local的更改版本， 用于10分钟后启动恶意样本
+// 还有一个元素， ImageNameSpecify必须指定为空。不允许赋值
+
+
+//比较细心的一点， json文件不能加注释， 加注释会导致解析json文件时出现错误
+//错误如下所示： invalid character '/' after top-level value
+//这一点注意一下即可。
+func ParseConfig(ConfigPath string)(filesPath *FilesPath, err error){
 	if utils.Debug_ {
 		log.Println("BasicCmd.GetAllMalware")
 	}
-	return &FilesPath{
+	data, err := ioutil.ReadFile(ConfigPath)
+	if err != nil {
+		log.Println("ioutil.ReadFile出现错误")
+		return nil, err
+	}
+	filesPath = &FilesPath{
 		MalwarePath:"",
 		StartScript:"",
 		ImageSrcPath:"",
-		ImageNameSpecify:"",
 		ImageDestPath:"",
 		LoadPath:"",
 	}
+	err = json.Unmarshal(data, filesPath)
+	if err != nil {
+		log.Println("json.Unmarshal出现问题")
+		log.Println(err)
+		return nil, err
+	}
+	return filesPath, nil
 }
 
